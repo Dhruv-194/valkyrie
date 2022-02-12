@@ -35,7 +35,7 @@ describe("NFTMarket", function () {
 
     let items = await market.fetchMarketItems();
     items = await Promise.all(
-      //asynch mapping of the functions
+      //async mapping of the functions
       items.map(async (i) => {
         const tokenURI = await nft.tokenURI(i.tokenId);
         let item = {
