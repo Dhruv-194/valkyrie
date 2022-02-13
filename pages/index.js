@@ -3,11 +3,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Web3Modal from "web3modal";
 
-let rpcEndpoint = null
-
 import { nftaddress, nftmarketaddress } from "../config";
+
 import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
 import Market from "../artifacts/contracts/Market.sol/NFTMarket.json";
+
+let rpcEndpoint = null;
+
+if (process.env.NEXT_PUBLIC_WORKSPACE_URL) {
+  rpcEndpoint = process.env.NEXT_PUBLIC_WORKSPACE_URL;
+}
+
 export default function Home() {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState("not-loaded");
@@ -15,7 +21,10 @@ export default function Home() {
     loadNFTs();
   }, []);
   async function loadNFTs() {
-    const provider = new ethers.providers.JsonRpcProvider(rpcEndpoint);
+    const provider = new ethers.providers.JsonRpcProvider(
+      "https://polygon-mumbai.g.alchemy.com/v2/xpeYvimlq5xX4GAGJ5RyBqfMOYU4-b-z"
+    );
+
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
     const marketContract = new ethers.Contract(
       nftmarketaddress,
@@ -62,14 +71,8 @@ export default function Home() {
     await transaction.wait();
     loadNFTs();
   }
-
   if (loadingState === "loaded" && !nfts.length)
-    return (
-      <h1 className="px-20 py-10 text-3xl">
-        {" "}
-        No superhero nfts in marketpalce
-      </h1>
-    );
+    return <h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>;
   return (
     <div className="flex justify-center">
       <div className="px-4" style={{ maxWidth: "1600px" }}>

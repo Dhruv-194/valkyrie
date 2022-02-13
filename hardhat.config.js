@@ -10,11 +10,11 @@ module.exports = {
       chainID: 1337,
     },
     mumbai: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/${projectIDMumbai}`,
+      url: `https://polygon-mumbai.g.alchemy.com/v2/xpeYvimlq5xX4GAGJ5RyBqfMOYU4-b-z`,
       accounts: [privateKey],
     },
     mainnet: {
-      url: `https://mainnet.infura.io/v3/${projectId}`,
+      url: `https://rpc-mainnet.matic.network`,
       accounts: [privateKey],
     },
   },
